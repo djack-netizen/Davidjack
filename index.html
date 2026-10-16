@@ -43,7 +43,7 @@ nav a{opacity:.85}nav a:hover{opacity:1;color:var(--red)}
 .band{position:relative;background:var(--black);padding-block:18px 10px}
 .bio{max-width:880px;margin:0 auto;text-align:center;font-size:13px;line-height:1.55;color:var(--mute);text-wrap:balance}
 .rules{height:4px;border-top:1px solid rgba(243,241,238,.55);border-bottom:1px solid rgba(243,241,238,.55);margin:16px calc(-1 * max(16px,env(safe-area-inset-right,0px))) 10px calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
-h1{margin:0;font-weight:900;font-stretch:100%;color:var(--red);text-transform:uppercase;white-space:nowrap;text-align:center;line-height:.82;letter-spacing:-.035em;font-size:15vw;padding-bottom:.04em}
+h1{margin:0 calc(-1 * max(16px,env(safe-area-inset-right,0px))) 0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));font-weight:900;font-stretch:100%;color:var(--red);text-transform:uppercase;white-space:nowrap;text-align:center;line-height:.82;letter-spacing:-.035em;font-size:15vw;padding-bottom:.04em}
 h1 sup{font-size:.22em;vertical-align:.95em;letter-spacing:0;margin-left:.04em;font-weight:700}
 
 footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-block:22px 28px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);border-top:1px solid #1c1c1c}
@@ -78,8 +78,8 @@ footer a{color:var(--white)}footer a:hover{color:var(--red)}
 (function(){
   var h=document.getElementById('name');
   function fit(){
-    var avail=h.parentElement.clientWidth-parseFloat(getComputedStyle(h.parentElement).paddingLeft)-parseFloat(getComputedStyle(h.parentElement).paddingRight);
-    h.style.fontSize='100px';var w=h.scrollWidth||1;h.style.fontSize=Math.min(100*avail/w,320)+'px';
+    var avail=document.documentElement.clientWidth*0.985;
+    h.style.display='inline-block';h.style.fontSize='100px';var w=h.getBoundingClientRect().width||1;h.style.display='';h.style.fontSize=(100*avail/w)+'px';
   }
   fit();addEventListener('resize',fit);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
