@@ -52,6 +52,16 @@ nav a{opacity:.85}nav a:hover{opacity:1;color:var(--red)}
 h1{margin:0 calc(-1 * max(16px,env(safe-area-inset-right,0px))) 0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));font-weight:900;font-stretch:100%;color:var(--red);text-transform:uppercase;white-space:nowrap;text-align:center;line-height:.82;letter-spacing:-.035em;font-size:15vw;padding-bottom:.04em}
 h1 sup{font-size:.22em;vertical-align:.95em;letter-spacing:0;margin-left:.04em;font-weight:700}
 
+.topbar{position:relative;z-index:2;overflow:hidden;background:rgba(5,5,5,.82);border-bottom:1px solid rgba(227,32,43,.35);padding-top:env(safe-area-inset-top,0px)}
+.topbar-track{display:flex;width:max-content;animation:tick2 40s linear infinite}
+.topbar-track span{flex:none;white-space:nowrap;font-family:"Space Mono",ui-monospace,Menlo,monospace;font-weight:700;text-transform:uppercase;color:var(--red);font-size:clamp(11px,1vw,14px);letter-spacing:.28em;line-height:1;padding-block:10px;padding-right:.28em}
+.topbar-track b{color:var(--white);font-weight:700}
+.topbar-track i{font-style:normal;color:var(--white);opacity:.55;margin:0 1.4em}
+.tb-link{display:inline-block;background:var(--red);color:var(--black);padding:5px 9px 5px 11px;margin:0 .2em;letter-spacing:.2em;border:1px solid var(--red);transition:background .15s,color .15s}
+.tb-link:hover,.tb-link:focus-visible{background:transparent;color:var(--red)}
+.topbar:hover .topbar-track,.topbar:focus-within .topbar-track{animation-play-state:paused}
+@keyframes tick2{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.topbar-track{animation:none}}
 footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-block:22px 28px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);border-top:1px solid #1c1c1c}
 footer a{color:var(--white)}footer a:hover{color:var(--red)}
 
@@ -65,6 +75,7 @@ footer a{color:var(--white)}footer a:hover{color:var(--red)}
 
 <div class="screen">
   <div class="photo" role="img" aria-label="David Jack performing live behind the decks"></div>
+  <div class="topbar"><div class="topbar-track"><span>Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener">Apple Music &#8599;</a><i>/</i></span><span aria-hidden="true">Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener" tabindex="-1">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener" tabindex="-1">Apple Music &#8599;</a><i>/</i></span><span aria-hidden="true">Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener" tabindex="-1">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener" tabindex="-1">Apple Music &#8599;</a><i>/</i></span><span aria-hidden="true">Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener" tabindex="-1">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener" tabindex="-1">Apple Music &#8599;</a><i>/</i></span></div></div>
   <nav class="pad"><a href="#about">About</a><a href="#sound">Jazz House</a><a href="#contact">Booking</a></nav>
   <div class="roles pad" id="sound"><span>Jazz house</span><span>for any</span><span>house.</span></div>
   <div class="band pad" id="about">
