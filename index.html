@@ -7,7 +7,7 @@
 <title>David Jack</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Space+Mono:wght@400;700&display=swap">
 <style>
 /* Layout: one full-bleed photo screen. Thin nav on top, stacked tagline over the photo, then a black band at the bottom holding a short bio and the name set edge to edge. Single dark look by choice. */
 :root{
@@ -41,7 +41,8 @@ nav a{opacity:.85}nav a:hover{opacity:1;color:var(--red)}
 .roles span:nth-child(3){transform:translateX(-4%)}
 
 .band{position:relative;background:var(--black);padding-block:18px 10px}
-.bio{max-width:880px;margin:0 auto;text-align:center;font-size:13px;line-height:1.55;color:var(--mute);text-wrap:balance}
+.bio{max-width:none;margin:0;font-family:"Space Mono",ui-monospace,Menlo,monospace;font-weight:700;text-transform:uppercase;color:var(--red);font-size:clamp(10px,1.02vw,15px);letter-spacing:.32em;line-height:2.1;text-align:justify;text-align-last:justify;hyphens:none}
+@media (max-width:600px){.bio{letter-spacing:.18em;text-align-last:left}}
 .rules{height:4px;border-top:1px solid rgba(243,241,238,.55);border-bottom:1px solid rgba(243,241,238,.55);margin:16px calc(-1 * max(16px,env(safe-area-inset-right,0px))) 10px calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
 h1{margin:0 calc(-1 * max(16px,env(safe-area-inset-right,0px))) 0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));font-weight:900;font-stretch:100%;color:var(--red);text-transform:uppercase;white-space:nowrap;text-align:center;line-height:.82;letter-spacing:-.035em;font-size:15vw;padding-bottom:.04em}
 h1 sup{font-size:.22em;vertical-align:.95em;letter-spacing:0;margin-left:.04em;font-weight:700}
@@ -62,7 +63,7 @@ footer a{color:var(--white)}footer a:hover{color:var(--red)}
   <nav class="pad"><a href="#about">About</a><a href="#sound">Jazz House</a><a href="#contact">Booking</a></nav>
   <div class="roles pad" id="sound"><span>Jazz house</span><span>for any</span><span>house.</span></div>
   <div class="band pad" id="about">
-    <p class="bio">David Jack is a jazz house musician and drummer, raised on New York City jazz and the low-lit rooms that kept it alive after midnight. The bass walks. The kick makes you two-step and dance with a stranger. And somewhere late in the set, nobody in the room is standing still.</p>
+    <p class="bio">Jazz house musician and drummer, raised on New York City jazz. The bass walks. The kick makes you two-step and dance with a stranger.</p>
     <div class="rules" aria-hidden="true"></div>
     <h1 id="name">David Jack<sup>&reg;</sup></h1>
   </div>
