@@ -42,7 +42,8 @@ nav a{opacity:.85}nav a:hover{opacity:1;color:var(--red)}
 
 .band{position:relative;background:var(--black);padding-block:18px 10px}
 .bio{max-width:none;margin:0;font-family:"Space Mono",ui-monospace,Menlo,monospace;font-weight:700;text-transform:uppercase;color:var(--red);font-size:clamp(10px,1.02vw,15px);letter-spacing:.32em;line-height:2.1;text-align:justify;text-align-last:justify;hyphens:none}
-@media (max-width:600px){.bio{letter-spacing:.18em;text-align-last:left}}
+.bio span{display:block;white-space:nowrap;text-align:justify;text-align-last:justify}
+@media (max-width:600px){.bio{letter-spacing:.16em;text-align:left;text-align-last:left}.bio span{display:inline;white-space:normal;text-align:left;text-align-last:left}}
 .rules{height:4px;border-top:1px solid rgba(243,241,238,.55);border-bottom:1px solid rgba(243,241,238,.55);margin:16px calc(-1 * max(16px,env(safe-area-inset-right,0px))) 10px calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
 h1{margin:0 calc(-1 * max(16px,env(safe-area-inset-right,0px))) 0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));font-weight:900;font-stretch:100%;color:var(--red);text-transform:uppercase;white-space:nowrap;text-align:center;line-height:.82;letter-spacing:-.035em;font-size:15vw;padding-bottom:.04em}
 h1 sup{font-size:.22em;vertical-align:.95em;letter-spacing:0;margin-left:.04em;font-weight:700}
@@ -63,7 +64,7 @@ footer a{color:var(--white)}footer a:hover{color:var(--red)}
   <nav class="pad"><a href="#about">About</a><a href="#sound">Jazz House</a><a href="#contact">Booking</a></nav>
   <div class="roles pad" id="sound"><span>Jazz house</span><span>for any</span><span>house.</span></div>
   <div class="band pad" id="about">
-    <p class="bio">Jazz house musician and drummer, raised on New York City jazz. The bass walks. The kick makes you two-step and dance with a stranger.</p>
+    <p class="bio" id="bio"><span>Jazz house musician and drummer, raised on New York City jazz.</span> <span>The bass walks. The kick makes you two-step and dance with a stranger.</span></p>
     <div class="rules" aria-hidden="true"></div>
     <h1 id="name">David Jack<sup>&reg;</sup></h1>
   </div>
@@ -82,7 +83,16 @@ footer a{color:var(--white)}footer a:hover{color:var(--red)}
     var avail=document.documentElement.clientWidth*0.985;
     h.style.display='inline-block';h.style.fontSize='100px';var w=h.getBoundingClientRect().width||1;h.style.display='';h.style.fontSize=(100*avail/w)+'px';
   }
-  fit();addEventListener('resize',fit);
+  var bio=document.getElementById('bio');
+  function fitBio(){
+    if(!bio)return;
+    if(innerWidth<=600){bio.style.fontSize='';return;}
+    var avail=bio.clientWidth;bio.style.fontSize='10px';
+    var m=0;bio.querySelectorAll('span').forEach(function(s){s.style.display='inline-block';m=Math.max(m,s.getBoundingClientRect().width);s.style.display='';});
+    bio.style.fontSize=Math.min(10*avail/(m||1),18)+'px';
+  }
+  fit();fitBio();addEventListener('resize',function(){fit();fitBio();});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitBio);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
 })();
 </script>
