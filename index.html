@@ -62,6 +62,13 @@ h1 sup{font-size:.22em;vertical-align:.95em;letter-spacing:0;margin-left:.04em;f
 .topbar:hover .topbar-track,.topbar:focus-within .topbar-track{animation-play-state:paused}
 @keyframes tick2{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.topbar-track{animation:none}}
+.player-row{position:relative;z-index:2;display:flex;justify-content:flex-end;padding-block:4px 0}
+.player{width:min(340px,100%);display:flex;flex-direction:column;gap:8px}
+.play-hint{margin:0;font-family:"Space Mono",ui-monospace,Menlo,monospace;font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.24em;color:var(--red);text-align:right;transition:opacity .4s}
+.play-hint.gone{opacity:0}
+.player-frame{height:80px;border-radius:12px;overflow:hidden;background:#121212;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.player-frame iframe{display:block;width:100%;height:80px;border:0}
+@media (max-width:600px){.player{width:100%}.play-hint{text-align:left}}
 footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-block:22px 28px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);border-top:1px solid #1c1c1c}
 footer a{color:var(--white)}footer a:hover{color:var(--red)}
 
@@ -77,6 +84,12 @@ footer a{color:var(--white)}footer a:hover{color:var(--red)}
   <div class="photo" role="img" aria-label="David Jack performing live behind the decks"></div>
   <div class="topbar"><div class="topbar-track"><span>Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener">Apple Music &#8599;</a><i>/</i></span><span aria-hidden="true">Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener" tabindex="-1">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener" tabindex="-1">Apple Music &#8599;</a><i>/</i></span><span aria-hidden="true">Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener" tabindex="-1">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener" tabindex="-1">Apple Music &#8599;</a><i>/</i></span><span aria-hidden="true">Listen to his new release with Baby Jake: <b>Love Me Down</b> on <a class="tb-link" href="https://open.spotify.com/track/6t5nlbrzN8mSnQMO81snHQ?si=2a337656c4074866" target="_blank" rel="noopener" tabindex="-1">Spotify &#8599;</a> or <a class="tb-link" href="https://music.apple.com/us/album/love-me-down-single/6821381503" target="_blank" rel="noopener" tabindex="-1">Apple Music &#8599;</a><i>/</i></span></div></div>
   <nav class="pad"><a href="#about">About</a><a href="#sound">Jazz House</a><a href="#contact">Booking</a></nav>
+  <div class="player-row pad">
+    <div class="player">
+      <p class="play-hint" id="playHint">&#9654; Tap anywhere to play Love Me Down</p>
+      <div class="player-frame"><div id="spotify-embed"></div></div>
+    </div>
+  </div>
   <div class="roles pad" id="sound"><span>Jazz house</span><span>for any</span><span>house.</span></div>
   <div class="band pad" id="about">
     <div class="ticker" role="text" aria-label="Jazz house musician and drummer, raised on New York City jazz. The bass walks. The kick makes you two-step and dance with a stranger."><div class="ticker-track" aria-hidden="true"><span>Jazz house musician and drummer, raised on New York City jazz <i>/</i> The bass walks <i>/</i> The kick makes you two-step and dance with a stranger <i>/</i> </span><span>Jazz house musician and drummer, raised on New York City jazz <i>/</i> The bass walks <i>/</i> The kick makes you two-step and dance with a stranger <i>/</i> </span></div></div>
@@ -103,5 +116,35 @@ footer a{color:var(--white)}footer a:hover{color:var(--red)}
 })();
 </script>
 
+<script>
+(function(){
+  var URI='spotify:track:6t5nlbrzN8mSnQMO81snHQ', ctrl=null, started=false;
+  var hint=document.getElementById('playHint'), box=document.getElementById('spotify-embed');
+  function hide(){ if(hint) hint.classList.add('gone'); }
+  function start(e){
+    if(started||!ctrl) return;
+    if(e&&e.target&&e.target.closest&&e.target.closest('a,.player')) return;
+    started=true; try{ ctrl.play(); }catch(_){}
+    stop();
+  }
+  function stop(){ ['pointerdown','keydown','touchend'].forEach(function(t){removeEventListener(t,start,true);}); }
+  ['pointerdown','keydown','touchend'].forEach(function(t){addEventListener(t,start,true);});
+  window.onSpotifyIframeApiReady=function(API){
+    API.createController(box,{uri:URI,width:'100%',height:80,theme:'dark'},function(c){
+      ctrl=c;
+      c.addListener('playback_update',function(ev){ if(ev&&ev.data&&!ev.data.isPaused){ started=true; hide(); stop(); } });
+    });
+  };
+  var s=document.createElement('script'); s.src='https://open.spotify.com/embed/iframe-api/v1'; s.async=true;
+  s.onerror=fallback; document.head.appendChild(s);
+  function fallback(){
+    if(ctrl) return;
+    box.outerHTML='<iframe src="https://open.spotify.com/embed/track/6t5nlbrzN8mSnQMO81snHQ?theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Love Me Down on Spotify"></iframe>';
+    if(hint) hint.textContent='\u25B6 Press play: Love Me Down';
+    stop();
+  }
+  setTimeout(fallback,8000);
+})();
+</script>
 </body>
 </html>
